@@ -60,9 +60,13 @@ const Messages = ({ navigation, route }) => {
   const [messageText, setMessageText] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isSending, setIsSending] = useState(false);
   const scrollViewRef = useRef(null);
+  const sendGuardRef = useRef(false);
+  const lastMarkReadRef = useRef(0);
+  const MARK_READ_DEBOUNCE_MS = 2500;
 
-  // Subscribe to real-time messages
+  // Subscribe to real-time messages (mark-as-read debounced so snapshot firing multiple times doesn't spam)
   useEffect(() => {
     if (!currentConversation?.id) {
       setLoading(false);
@@ -71,27 +75,23 @@ const Messages = ({ navigation, route }) => {
 
     let scrollTimeoutId = null;
 
-    // Safety timeout: if Firestore doesn't respond within 5s (e.g. empty convo),
-    // stop the spinner to show the empty-state 'Say hello!' message.
-    const loadingTimeoutId = setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+    const loadingTimeoutId = setTimeout(() => setLoading(false), 5000);
 
-    // Mark as read when opening (conversationId, userRole)
-    markConversationAsRead(currentConversation.id, userRole);
+    const debouncedMarkRead = () => {
+      const now = Date.now();
+      if (now - lastMarkReadRef.current < MARK_READ_DEBOUNCE_MS) return;
+      lastMarkReadRef.current = now;
+      markConversationAsRead(currentConversation.id, userRole);
+    };
+
+    debouncedMarkRead(); // once on open
 
     const unsubscribe = subscribeToMessages(currentConversation.id, (newMessages) => {
-      clearTimeout(loadingTimeoutId); // Firestore responded — cancel the timeout
+      clearTimeout(loadingTimeoutId);
       setMessages(newMessages);
       setLoading(false);
-
-      // If we're on the screen and get a new message, mark as read
-      markConversationAsRead(currentConversation.id, userRole);
-
-      // Scroll to bottom on new messages
-      scrollTimeoutId = setTimeout(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-      }, 100);
+      debouncedMarkRead();
+      scrollTimeoutId = setTimeout(() => scrollViewRef.current?.scrollToEnd({ animated: true }), 100);
     });
 
     return () => {
@@ -99,7 +99,7 @@ const Messages = ({ navigation, route }) => {
       clearTimeout(loadingTimeoutId);
       if (scrollTimeoutId) clearTimeout(scrollTimeoutId);
     };
-  }, [currentConversation?.id]);
+  }, [currentConversation?.id, userRole]);
 
   // Resolve header (name, avatar, subtitle) from Firestore if missing/minimal
   useEffect(() => {
@@ -148,31 +148,27 @@ const Messages = ({ navigation, route }) => {
   };
 
   const handleSendMessage = async () => {
-    if (!messageText.trim()) return;
+    if (!messageText.trim() || sendGuardRef.current || isSending) return;
 
-    // Optimistic UI update could be added here, 
-    // but Firestore is fast enough usually
+    sendGuardRef.current = true;
+    setIsSending(true);
+    const textToSend = messageText.trim();
+    setMessageText(''); // Clear input immediately to prevent double send
 
     try {
-      const textToSend = messageText.trim();
-      setMessageText(''); // Clear input immediately
-
-      // If we don't have a valid conversation ID yet (e.g. creating new chat), we might need to create it first
-      // For now, assuming conversation exists passed from Inbox
-
       await sendMessage(
         currentConversation.id,
         {
           text: textToSend,
           isOffer: false,
-          isUser: true // This is just for local UI logic if we weren't using senderId check
+          isUser: true
         },
         userId,
         userRole
       );
-
     } catch (error) {
       console.error('Error sending message:', error);
+      setMessageText(textToSend); // Restore text on failure
       const isSupportChat = (route?.params?.conversation?.name || '').toLowerCase().includes('support');
       showToast(
         isSupportChat
@@ -180,6 +176,9 @@ const Messages = ({ navigation, route }) => {
           : 'Failed to send message. Please try again.',
         'error'
       );
+    } finally {
+      sendGuardRef.current = false;
+      setIsSending(false);
     }
   };
 
@@ -217,20 +216,27 @@ const Messages = ({ navigation, route }) => {
       });
 
       if (uploadResponse?.data?.url) {
-        // Send file message
-        await sendMessage(
-          currentConversation.id,
-          {
-            isFile: true,
-            fileUrl: uploadResponse.data.url,
-            fileName: asset.fileName || 'image.jpg',
-            fileSize: asset.fileSize,
-            fileType: 'image',
-            text: '', // Empty text for file messages
-          },
-          userId,
-          userRole
-        );
+        if (sendGuardRef.current || isSending) return;
+        sendGuardRef.current = true;
+        setIsSending(true);
+        try {
+          await sendMessage(
+            currentConversation.id,
+            {
+              isFile: true,
+              fileUrl: uploadResponse.data.url,
+              fileName: asset.fileName || 'image.jpg',
+              fileSize: asset.fileSize,
+              fileType: 'image',
+              text: '', // Empty text for file messages
+            },
+            userId,
+            userRole
+          );
+        } finally {
+          sendGuardRef.current = false;
+          setIsSending(false);
+        }
       } else {
         throw new Error('Upload failed - no URL returned');
       }
@@ -461,11 +467,15 @@ const Messages = ({ navigation, route }) => {
         />
 
         <TouchableOpacity
-          style={[styles.sendButton, !messageText.trim() && { backgroundColor: '#cbd5e1' }]}
+          style={[styles.sendButton, (!messageText.trim() || isSending) && { backgroundColor: '#cbd5e1' }]}
           onPress={handleSendMessage}
-          disabled={!messageText.trim()}
+          disabled={!messageText.trim() || isSending}
         >
-          <MaterialIcons name="send" size={20} color="#ffffff" />
+          {isSending ? (
+            <ActivityIndicator size="small" color="#ffffff" />
+          ) : (
+            <MaterialIcons name="send" size={20} color="#ffffff" />
+          )}
         </TouchableOpacity>
       </View>
 

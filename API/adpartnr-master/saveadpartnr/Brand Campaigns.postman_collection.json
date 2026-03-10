@@ -1,0 +1,954 @@
+{
+	"info": {
+		"_postman_id": "de8fd1e4-288a-4f79-87dd-4fdd9d445c10",
+		"name": "Brand Campaigns",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Browse Campaigns - Creators",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/campaigns?page=1&limit=10&mainGoal=brand_awareness&compensationType=paid&platform=tiktok&search=summer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"campaigns"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						},
+						{
+							"key": "mainGoal",
+							"value": "brand_awareness"
+						},
+						{
+							"key": "compensationType",
+							"value": "paid"
+						},
+						{
+							"key": "platform",
+							"value": "tiktok"
+						},
+						{
+							"key": "search",
+							"value": "summer"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Browse Campaigns - Creators",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/campaigns?page=1&limit=10&mainGoal=brand_awareness&compensationType=paid&platform=tiktok&search=summer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "mainGoal",
+									"value": "brand_awareness"
+								},
+								{
+									"key": "compensationType",
+									"value": "paid"
+								},
+								{
+									"key": "platform",
+									"value": "tiktok"
+								},
+								{
+									"key": "search",
+									"value": "summer"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "99"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 02 Nov 2025 21:39:56 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1762120214"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "255"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"ff-Bih2RAUqFB6x3rqwdl/EkrKDVCM\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Campaigns retrieved successfully\",\n    \"data\": {\n        \"campaigns\": [],\n        \"pagination\": {\n            \"currentPage\": \"1\",\n            \"totalPages\": 0,\n            \"totalItems\": 0,\n            \"itemsPerPage\": 10,\n            \"hasNextPage\": false,\n            \"hasPrevPage\": false,\n            \"nextPage\": null,\n            \"prevPage\": null,\n            \"totalResults\": 0\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Campaign Details",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGZkMWEzNjZjZmI1MmE3NGQ3MTMyNmMiLCJpYXQiOjE3NjE4NDY1NzcsImV4cCI6MTc2MjQ1MTM3N30.TE7DY5_eChfgTd51nvX_2F48RIkTDzgoUTSHAqemknQ",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/campaigns/6907d3a8fba8149342ebeafb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"campaigns",
+						"6907d3a8fba8149342ebeafb"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Campaign Details",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGZkMWEzNjZjZmI1MmE3NGQ3MTMyNmMiLCJpYXQiOjE3NjE4NDY1NzcsImV4cCI6MTc2MjQ1MTM3N30.TE7DY5_eChfgTd51nvX_2F48RIkTDzgoUTSHAqemknQ",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/campaigns/6907d3a8fba8149342ebeafb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns",
+								"6907d3a8fba8149342ebeafb"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "95"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 02 Nov 2025 21:57:49 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1762121114"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"62e-Oj2ji4PgyoQgWCE095/k5UsAMNY\""
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Campaign retrieved successfully\",\n    \"data\": {\n        \"budgetRange\": {\n            \"min\": 200,\n            \"max\": 500\n        },\n        \"_id\": \"6907d3a8fba8149342ebeafb\",\n        \"brandId\": {\n            \"_id\": \"6907d1df20e9d6638b910d70\",\n            \"name\": \"John Doe\",\n            \"email\": \"unigwechioma49@gmail.com\",\n            \"averageRating\": 0,\n            \"id\": \"6907d1df20e9d6638b910d70\"\n        },\n        \"name\": \"EcoWear Summer Line Launch\",\n        \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n        \"budget\": 5000,\n        \"platform\": [\n            \"tiktok\",\n            \"instagram\"\n        ],\n        \"mainGoal\": \"brand_awareness\",\n        \"goals\": [\n            \"brand_awareness\",\n            \"engagement\"\n        ],\n        \"serviceType\": \"influencer_service\",\n        \"campaignDuration\": \"3 weeks\",\n        \"postVisibilityDuration\": \"30 days on page\",\n        \"compensationType\": \"both\",\n        \"deliverables\": [\n            \"short_video\",\n            \"story\"\n        ],\n        \"requirements\": {\n            \"followerRange\": {\n                \"range\": \"micro\",\n                \"min\": 1000,\n                \"max\": 10000\n            },\n            \"followers\": {\n                \"min\": 0\n            },\n            \"location\": [\n                \"United States\"\n            ],\n            \"niche\": [\n                \"fashion_beauty\"\n            ],\n            \"gender\": [\n                \"female\",\n                \"all\"\n            ],\n            \"_id\": \"6907d3a8fba8149342ebeafc\"\n        },\n        \"applicants\": [],\n        \"hiredCreators\": [],\n        \"status\": \"open\",\n        \"dueDate\": \"2025-12-31T23:59:59.000Z\",\n        \"tags\": [\n            \"sustainable\",\n            \"fashion\",\n            \"summer\"\n        ],\n        \"isUrgent\": false,\n        \"isPublic\": true,\n        \"maxApplicants\": 50,\n        \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n        \"media\": [\n            {\n                \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n                \"type\": \"image\",\n                \"_id\": \"6907d3a8fba8149342ebeafd\",\n                \"id\": \"6907d3a8fba8149342ebeafd\"\n            }\n        ],\n        \"createdAt\": \"2025-11-02T21:56:56.295Z\",\n        \"updatedAt\": \"2025-11-02T21:56:56.295Z\",\n        \"__v\": 0,\n        \"applicantCount\": 0,\n        \"hiredCount\": 0,\n        \"remainingBudget\": 5000,\n        \"id\": \"6907d3a8fba8149342ebeafb\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Campaign",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3NjIxMjAxNjAsImV4cCI6MTc2MjcyNDk2MH0.Erz8egms8uT7mohXRGUHwicnOcjIMgpVOA8n2JEq3CM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"EcoWear Summer Line Launch\",\n  \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n  \"mainGoal\": \"brand_awareness\",\n  \"goals\": [\"brand_awareness\", \"engagement\"],\n  \"serviceType\": \"influencer_service\",\n  \"platform\": [\"tiktok\", \"instagram\"],\n  \"compensationType\": \"both\",\n  \"budget\": 5000,\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500\n  },\n  \"deliverables\": [\"short_video\", \"story\"],\n  \"campaignDuration\": \"3 weeks\",\n  \"postVisibilityDuration\": \"30 days on page\",\n  \"applicationDeadline\": \"2024-12-31T23:59:59Z\",\n  \"dueDate\": \"2025-12-31T23:59:59Z\",\n  \"requirements\": {\n    \"followerRange\": {\n      \"range\": \"micro\",\n      \"min\": 1000,\n      \"max\": 10000\n    },\n    \"niche\": [\"fashion_beauty\"],\n    \"location\": [\"United States\"],\n    \"gender\": [\"female\", \"all\"]\n  },\n  \"tags\": [\"sustainable\", \"fashion\", \"summer\"],\n  \"media\": [\n    {\n      \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n      \"type\": \"image\"\n    }\n  ],\n  \"status\": \"open\",\n  \"isPublic\": true\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/campaigns",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"campaigns"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Create Campaign",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3NjIxMjAxNjAsImV4cCI6MTc2MjcyNDk2MH0.Erz8egms8uT7mohXRGUHwicnOcjIMgpVOA8n2JEq3CM",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"EcoWear Summer Line Launch\",\n  \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n  \"mainGoal\": \"brand_awareness\",\n  \"goals\": [\"brand_awareness\", \"engagement\"],\n  \"serviceType\": \"influencer_service\",\n  \"platform\": [\"tiktok\", \"instagram\"],\n  \"compensationType\": \"both\",\n  \"budget\": 5000,\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500\n  },\n  \"deliverables\": [\"short_video\", \"story\"],\n  \"campaignDuration\": \"3 weeks\",\n  \"postVisibilityDuration\": \"30 days on page\",\n  \"applicationDeadline\": \"2024-12-31T23:59:59Z\",\n  \"dueDate\": \"2025-12-31T23:59:59Z\",\n  \"requirements\": {\n    \"followerRange\": {\n      \"range\": \"micro\",\n      \"min\": 1000,\n      \"max\": 10000\n    },\n    \"niche\": [\"fashion_beauty\"],\n    \"location\": [\"United States\"],\n    \"gender\": [\"female\", \"all\"]\n  },\n  \"tags\": [\"sustainable\", \"fashion\", \"summer\"],\n  \"media\": [\n    {\n      \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n      \"type\": \"image\"\n    }\n  ],\n  \"status\": \"open\",\n  \"isPublic\": true\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/campaigns",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "96"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 02 Nov 2025 21:56:56 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1762121114"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"5bd-lgjBSWrlRHbu/SporW+qXTF7348\""
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Campaign created successfully\",\n    \"data\": {\n        \"brandId\": \"6907d1df20e9d6638b910d70\",\n        \"name\": \"EcoWear Summer Line Launch\",\n        \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n        \"budget\": 5000,\n        \"platform\": [\n            \"tiktok\",\n            \"instagram\"\n        ],\n        \"mainGoal\": \"brand_awareness\",\n        \"goals\": [\n            \"brand_awareness\",\n            \"engagement\"\n        ],\n        \"serviceType\": \"influencer_service\",\n        \"campaignDuration\": \"3 weeks\",\n        \"postVisibilityDuration\": \"30 days on page\",\n        \"compensationType\": \"both\",\n        \"budgetRange\": {\n            \"min\": 200,\n            \"max\": 500\n        },\n        \"deliverables\": [\n            \"short_video\",\n            \"story\"\n        ],\n        \"requirements\": {\n            \"followerRange\": {\n                \"range\": \"micro\",\n                \"min\": 1000,\n                \"max\": 10000\n            },\n            \"followers\": {\n                \"min\": 0\n            },\n            \"location\": [\n                \"United States\"\n            ],\n            \"niche\": [\n                \"fashion_beauty\"\n            ],\n            \"gender\": [\n                \"female\",\n                \"all\"\n            ],\n            \"_id\": \"6907d3a8fba8149342ebeafc\"\n        },\n        \"applicants\": [],\n        \"hiredCreators\": [],\n        \"status\": \"open\",\n        \"dueDate\": \"2025-12-31T23:59:59.000Z\",\n        \"tags\": [\n            \"sustainable\",\n            \"fashion\",\n            \"summer\"\n        ],\n        \"isUrgent\": false,\n        \"isPublic\": true,\n        \"maxApplicants\": 50,\n        \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n        \"media\": [\n            {\n                \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n                \"type\": \"image\",\n                \"_id\": \"6907d3a8fba8149342ebeafd\",\n                \"id\": \"6907d3a8fba8149342ebeafd\"\n            }\n        ],\n        \"_id\": \"6907d3a8fba8149342ebeafb\",\n        \"createdAt\": \"2025-11-02T21:56:56.295Z\",\n        \"updatedAt\": \"2025-11-02T21:56:56.295Z\",\n        \"__v\": 0,\n        \"applicantCount\": 0,\n        \"hiredCount\": 0,\n        \"remainingBudget\": 5000,\n        \"id\": \"6907d3a8fba8149342ebeafb\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Get My Campaigns (Brand)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3NjIxMjAxNjAsImV4cCI6MTc2MjcyNDk2MH0.Erz8egms8uT7mohXRGUHwicnOcjIMgpVOA8n2JEq3CM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"EcoWear Summer Line Launch\",\n  \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n  \"mainGoal\": \"brand_awareness\",\n  \"goals\": [\"brand_awareness\", \"engagement\"],\n  \"serviceType\": \"influencer_service\",\n  \"platform\": [\"tiktok\", \"instagram\"],\n  \"compensationType\": \"both\",\n  \"budget\": 5000,\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500\n  },\n  \"deliverables\": [\"short_video\", \"story\"],\n  \"campaignDuration\": \"3 weeks\",\n  \"postVisibilityDuration\": \"30 days on page\",\n  \"applicationDeadline\": \"2024-12-31T23:59:59Z\",\n  \"dueDate\": \"2025-12-31T23:59:59Z\",\n  \"requirements\": {\n    \"followerRange\": {\n      \"range\": \"micro\",\n      \"min\": 1000,\n      \"max\": 10000\n    },\n    \"niche\": [\"fashion_beauty\"],\n    \"location\": [\"United States\"],\n    \"gender\": [\"female\", \"all\"]\n  },\n  \"tags\": [\"sustainable\", \"fashion\", \"summer\"],\n  \"media\": [\n    {\n      \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n      \"type\": \"image\"\n    }\n  ],\n  \"status\": \"open\",\n  \"isPublic\": true\n}\n"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/campaigns/me/campaigns?status=open&page=1&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"campaigns",
+						"me",
+						"campaigns"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "open"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get My Campaigns (Brand)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3NjIxMjAxNjAsImV4cCI6MTc2MjcyNDk2MH0.Erz8egms8uT7mohXRGUHwicnOcjIMgpVOA8n2JEq3CM",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"EcoWear Summer Line Launch\",\n  \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n  \"mainGoal\": \"brand_awareness\",\n  \"goals\": [\"brand_awareness\", \"engagement\"],\n  \"serviceType\": \"influencer_service\",\n  \"platform\": [\"tiktok\", \"instagram\"],\n  \"compensationType\": \"both\",\n  \"budget\": 5000,\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500\n  },\n  \"deliverables\": [\"short_video\", \"story\"],\n  \"campaignDuration\": \"3 weeks\",\n  \"postVisibilityDuration\": \"30 days on page\",\n  \"applicationDeadline\": \"2024-12-31T23:59:59Z\",\n  \"dueDate\": \"2025-12-31T23:59:59Z\",\n  \"requirements\": {\n    \"followerRange\": {\n      \"range\": \"micro\",\n      \"min\": 1000,\n      \"max\": 10000\n    },\n    \"niche\": [\"fashion_beauty\"],\n    \"location\": [\"United States\"],\n    \"gender\": [\"female\", \"all\"]\n  },\n  \"tags\": [\"sustainable\", \"fashion\", \"summer\"],\n  \"media\": [\n    {\n      \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n      \"type\": \"image\"\n    }\n  ],\n  \"status\": \"open\",\n  \"isPublic\": true\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/campaigns/me/campaigns?status=open&page=1&limit=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns",
+								"me",
+								"campaigns"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "open"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "94"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 02 Nov 2025 21:59:49 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1762121114"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"67a-jlRy37uNK3MnjhXSCCfxtdris8U\""
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Campaigns retrieved successfully\",\n    \"data\": {\n        \"campaigns\": [\n            {\n                \"budgetRange\": {\n                    \"min\": 200,\n                    \"max\": 500\n                },\n                \"_id\": \"6907d3a8fba8149342ebeafb\",\n                \"brandId\": \"6907d1df20e9d6638b910d70\",\n                \"name\": \"EcoWear Summer Line Launch\",\n                \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n                \"budget\": 5000,\n                \"platform\": [\n                    \"tiktok\",\n                    \"instagram\"\n                ],\n                \"mainGoal\": \"brand_awareness\",\n                \"goals\": [\n                    \"brand_awareness\",\n                    \"engagement\"\n                ],\n                \"serviceType\": \"influencer_service\",\n                \"campaignDuration\": \"3 weeks\",\n                \"postVisibilityDuration\": \"30 days on page\",\n                \"compensationType\": \"both\",\n                \"deliverables\": [\n                    \"short_video\",\n                    \"story\"\n                ],\n                \"requirements\": {\n                    \"followerRange\": {\n                        \"range\": \"micro\",\n                        \"min\": 1000,\n                        \"max\": 10000\n                    },\n                    \"followers\": {\n                        \"min\": 0\n                    },\n                    \"location\": [\n                        \"United States\"\n                    ],\n                    \"niche\": [\n                        \"fashion_beauty\"\n                    ],\n                    \"gender\": [\n                        \"female\",\n                        \"all\"\n                    ],\n                    \"_id\": \"6907d3a8fba8149342ebeafc\"\n                },\n                \"applicants\": [],\n                \"hiredCreators\": [],\n                \"status\": \"open\",\n                \"dueDate\": \"2025-12-31T23:59:59.000Z\",\n                \"tags\": [\n                    \"sustainable\",\n                    \"fashion\",\n                    \"summer\"\n                ],\n                \"isUrgent\": false,\n                \"isPublic\": true,\n                \"maxApplicants\": 50,\n                \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n                \"media\": [\n                    {\n                        \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n                        \"type\": \"image\",\n                        \"_id\": \"6907d3a8fba8149342ebeafd\",\n                        \"id\": \"6907d3a8fba8149342ebeafd\"\n                    }\n                ],\n                \"createdAt\": \"2025-11-02T21:56:56.295Z\",\n                \"updatedAt\": \"2025-11-02T21:56:56.295Z\",\n                \"__v\": 0,\n                \"applicantCount\": 0,\n                \"hiredCount\": 0,\n                \"remainingBudget\": 5000,\n                \"id\": \"6907d3a8fba8149342ebeafb\"\n            }\n        ],\n        \"pagination\": {\n            \"currentPage\": \"1\",\n            \"totalPages\": 1,\n            \"totalItems\": 1,\n            \"itemsPerPage\": 10,\n            \"hasNextPage\": false,\n            \"hasPrevPage\": false,\n            \"nextPage\": null,\n            \"prevPage\": null,\n            \"totalResults\": 1\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Campaign (Brand)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3NjIxMjAxNjAsImV4cCI6MTc2MjcyNDk2MH0.Erz8egms8uT7mohXRGUHwicnOcjIMgpVOA8n2JEq3CM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"accepting_bids\",\n  \"description\": \"Updated campaign description\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/campaigns/6907d3a8fba8149342ebeafb",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"campaigns",
+						"6907d3a8fba8149342ebeafb"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update Campaign (Brand)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3NjIxMjAxNjAsImV4cCI6MTc2MjcyNDk2MH0.Erz8egms8uT7mohXRGUHwicnOcjIMgpVOA8n2JEq3CM",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"accepting_bids\",\n  \"description\": \"Updated campaign description\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/campaigns/6907d3a8fba8149342ebeafb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns",
+								"6907d3a8fba8149342ebeafb"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "99"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 02 Nov 2025 22:11:07 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1762122124"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"521-UO9H4ALeoKkHlX+C7WMZ51M4fac\""
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Campaign updated successfully\",\n    \"data\": {\n        \"budgetRange\": {\n            \"min\": 200,\n            \"max\": 500\n        },\n        \"_id\": \"6907d3a8fba8149342ebeafb\",\n        \"brandId\": \"6907d1df20e9d6638b910d70\",\n        \"name\": \"EcoWear Summer Line Launch\",\n        \"description\": \"Updated campaign description\",\n        \"budget\": 5000,\n        \"platform\": [\n            \"tiktok\",\n            \"instagram\"\n        ],\n        \"mainGoal\": \"brand_awareness\",\n        \"goals\": [\n            \"brand_awareness\",\n            \"engagement\"\n        ],\n        \"serviceType\": \"influencer_service\",\n        \"campaignDuration\": \"3 weeks\",\n        \"postVisibilityDuration\": \"30 days on page\",\n        \"compensationType\": \"both\",\n        \"deliverables\": [\n            \"short_video\",\n            \"story\"\n        ],\n        \"requirements\": {\n            \"followerRange\": {\n                \"range\": \"micro\",\n                \"min\": 1000,\n                \"max\": 10000\n            },\n            \"followers\": {\n                \"min\": 0\n            },\n            \"location\": [\n                \"United States\"\n            ],\n            \"niche\": [\n                \"fashion_beauty\"\n            ],\n            \"gender\": [\n                \"female\",\n                \"all\"\n            ],\n            \"_id\": \"6907d3a8fba8149342ebeafc\"\n        },\n        \"applicants\": [],\n        \"hiredCreators\": [],\n        \"status\": \"accepting_bids\",\n        \"dueDate\": \"2025-12-31T23:59:59.000Z\",\n        \"tags\": [\n            \"sustainable\",\n            \"fashion\",\n            \"summer\"\n        ],\n        \"isUrgent\": false,\n        \"isPublic\": true,\n        \"maxApplicants\": 50,\n        \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n        \"media\": [\n            {\n                \"url\": \"https://cloudinary.com/campaign-image.jpg\",\n                \"type\": \"image\",\n                \"_id\": \"6907d3a8fba8149342ebeafd\",\n                \"id\": \"6907d3a8fba8149342ebeafd\"\n            }\n        ],\n        \"createdAt\": \"2025-11-02T21:56:56.295Z\",\n        \"updatedAt\": \"2025-11-02T22:11:07.823Z\",\n        \"__v\": 0,\n        \"applicantCount\": 0,\n        \"hiredCount\": 0,\n        \"remainingBudget\": 5000,\n        \"id\": \"6907d3a8fba8149342ebeafb\"\n    }\n}"
+				}
+			]
+		}
+	]
+}

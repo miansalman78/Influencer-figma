@@ -50,6 +50,7 @@ const CreateFirstOffer = ({ navigation, route }) => {
     ];
 
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submittingAction, setSubmittingAction] = useState(null); // 'active' | 'draft'
 
     // Prefill from profile if available
     useEffect(() => {
@@ -113,18 +114,24 @@ const CreateFirstOffer = ({ navigation, route }) => {
         };
     };
 
-    const handleCreateOffer = async () => {
+    const submitOffer = async (status) => {
         if (!offerTitle || !rate) return;
         try {
             setIsSubmitting(true);
-            const response = await createOffer(buildOfferPayload('draft'));
+            setSubmittingAction(status);
+            const response = await createOffer(buildOfferPayload(status));
 
-            if (!response || (!response.success && !response._id && !response.id &&
-                !(response.data && (response.data._id || response.data.id)))) {
+            const created = response?.data || response;
+            if (!created || (!created._id && !created.id)) {
                 throw new Error(response?.message || 'Failed to create offer');
             }
 
-            // Navigate to dashboard after successful save
+            if (status === 'active') {
+                showToast('Offer created successfully!', 'success');
+            } else {
+                showToast('Offer saved as draft!', 'success');
+            }
+
             navigation?.navigate('AppNavigator', {
                 initialTab: 'Home',
                 role: 'Creator',
@@ -134,8 +141,12 @@ const CreateFirstOffer = ({ navigation, route }) => {
             showToast(err.message || 'Failed to save your offer. Please try again.', 'error');
         } finally {
             setIsSubmitting(false);
+            setSubmittingAction(null);
         }
     };
+
+    const handleCreateOffer = () => submitOffer('active');
+    const handleSaveDraft = () => submitOffer('draft');
 
     const handleSkip = () => {
         // Skip offer creation and go to Dashboard
@@ -298,26 +309,24 @@ const CreateFirstOffer = ({ navigation, route }) => {
                         />
                     </View>
 
-                    {/* Revisions and Negotiable */}
+                    {/* Revisions */}
                     <View style={styles.section}>
-                        <View style={styles.rowContainer}>
-                            <View style={styles.halfInputGroup}>
-                                <Text style={styles.inputLabel}>Revisions</Text>
-                                <TextInput
-                                    style={styles.textInput}
-                                    placeholder="0"
-                                    placeholderTextColor="#9ca3af"
-                                    value={revisions}
-                                    onChangeText={setRevisions}
-                                    keyboardType="numeric"
-                                />
-                            </View>
-                            <View style={[styles.halfInputGroup, { justifyContent: 'flex-end' }]}>
-                                <Text style={styles.inputLabel}>Negotiable</Text>
-                                <View style={{ backgroundColor: '#ffffff', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, borderWidth: 1, borderColor: '#e5e7eb', alignItems: 'center' }}>
-                                    <Switch value={isNegotiable} onValueChange={setIsNegotiable} />
-                                </View>
-                            </View>
+                        <Text style={styles.inputLabel}>Revisions</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="0"
+                            placeholderTextColor="#9ca3af"
+                            value={revisions}
+                            onChangeText={setRevisions}
+                            keyboardType="numeric"
+                        />
+                    </View>
+
+                    {/* Negotiable (standalone toggle, not inside an input-style field) */}
+                    <View style={styles.section}>
+                        <View style={styles.negotiableRow}>
+                            <Text style={styles.inputLabel}>Negotiable</Text>
+                            <Switch value={isNegotiable} onValueChange={setIsNegotiable} />
                         </View>
                     </View>
 
@@ -356,14 +365,28 @@ const CreateFirstOffer = ({ navigation, route }) => {
                         {isSubmitting ? (
                             <>
                                 <ActivityIndicator size="small" color="#ffffff" />
-                                <Text style={styles.createButtonText}>Saving...</Text>
+                                <Text style={styles.createButtonText}>
+                                    {submittingAction === 'draft' ? 'Saving...' : 'Creating...'}
+                                </Text>
                             </>
                         ) : (
                             <>
-                                <Text style={styles.createButtonText}>Save as Draft</Text>
-                                <MaterialIcons name="check" size={20} color="#ffffff" />
+                                <Text style={styles.createButtonText}>Create Offer</Text>
+                                <MaterialIcons name="add-circle-outline" size={20} color="#ffffff" />
                             </>
                         )}
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={[
+                            styles.saveDraftButton,
+                            (!offerTitle || !rate || isSubmitting) && styles.createButtonDisabled
+                        ]}
+                        onPress={handleSaveDraft}
+                        disabled={!offerTitle || !rate || isSubmitting}
+                    >
+                        <Text style={styles.saveDraftButtonText}>Save as Draft</Text>
+                        <MaterialIcons name="save" size={20} color="#337DEB" />
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.skipButton} onPress={handleSkip} disabled={isSubmitting}>
@@ -503,6 +526,11 @@ const styles = StyleSheet.create({
     halfInputGroup: {
         flex: 1,
     },
+    negotiableRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
     textInput: {
         backgroundColor: '#ffffff',
         borderWidth: 1,
@@ -558,6 +586,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#ffffff',
+    },
+    saveDraftButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        backgroundColor: '#ffffff',
+        borderWidth: 2,
+        borderColor: '#337DEB',
+        borderRadius: 12,
+        paddingVertical: 14,
+        marginBottom: 12,
+    },
+    saveDraftButtonText: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#337DEB',
     },
     skipButton: {
         paddingVertical: 12,

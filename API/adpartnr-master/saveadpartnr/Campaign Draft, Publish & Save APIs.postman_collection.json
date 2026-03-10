@@ -1,0 +1,1582 @@
+{
+	"info": {
+		"_postman_id": "c47e9fa4-fed0-477b-9d33-59c559f14d25",
+		"name": "Campaign Draft, Publish & Save APIs",
+		"description": "APIs for creating drafts, publishing campaigns, and saving/bookmarking campaigns",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Brand Campaign Management",
+			"item": [
+				{
+					"name": "Create Campaign (Draft)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.success && response.data) {",
+									"        pm.environment.set(\"campaignId\", response.data._id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Summer Collection Launch Campaign\",\n  \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n  \"status\": \"draft\",\n  \"budget\": 5000,\n  \"currency\": \"NGN\",\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500,\n    \"currency\": \"NGN\"\n  },\n  \"platform\": [\"instagram\", \"tiktok\"],\n  \"mainGoal\": \"brand_awareness\",\n  \"goals\": [\"brand_awareness\", \"engagement\"],\n  \"serviceType\": \"influencer_service\",\n  \"compensationType\": \"paid\",\n  \"deliverables\": [\"feed_post\", \"story\"],\n  \"campaignDuration\": \"3 weeks\",\n  \"postVisibilityDuration\": \"30 days on page\",\n  \"requirements\": {\n    \"followerRange\": {\n      \"range\": \"micro\",\n      \"min\": 1000,\n      \"max\": 10000\n    },\n    \"followers\": {\n      \"min\": 1000\n    },\n    \"location\": [\"United States\"],\n    \"niche\": [\"fashion_beauty\"],\n    \"gender\": [\"female\", \"all\"]\n  },\n  \"tags\": [\"sustainable\", \"fashion\", \"summer\"],\n  \"isUrgent\": false,\n  \"isPublic\": true,\n  \"maxApplicants\": 50,\n  \"dueDate\": \"2026-01-31T23:59:59.000Z\",\n  \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/campaigns",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns"
+							]
+						},
+						"description": "Create a new campaign as a draft. Status defaults to 'draft' if not provided. dueDate is optional for drafts."
+					},
+					"response": [
+						{
+							"name": "Create Campaign (Draft)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Summer Collection Launch Campaign\",\n  \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n  \"status\": \"draft\",\n  \"budget\": 5000,\n  \"currency\": \"NGN\",\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500,\n    \"currency\": \"NGN\"\n  },\n  \"platform\": [\"instagram\", \"tiktok\"],\n  \"mainGoal\": \"brand_awareness\",\n  \"goals\": [\"brand_awareness\", \"engagement\"],\n  \"serviceType\": \"influencer_service\",\n  \"compensationType\": \"paid\",\n  \"deliverables\": [\"feed_post\", \"story\"],\n  \"campaignDuration\": \"3 weeks\",\n  \"postVisibilityDuration\": \"30 days on page\",\n  \"requirements\": {\n    \"followerRange\": {\n      \"range\": \"micro\",\n      \"min\": 1000,\n      \"max\": 10000\n    },\n    \"followers\": {\n      \"min\": 1000\n    },\n    \"location\": [\"United States\"],\n    \"niche\": [\"fashion_beauty\"],\n    \"gender\": [\"female\", \"all\"]\n  },\n  \"tags\": [\"sustainable\", \"fashion\", \"summer\"],\n  \"isUrgent\": false,\n  \"isPublic\": true,\n  \"maxApplicants\": 50,\n  \"dueDate\": \"2026-01-31T23:59:59.000Z\",\n  \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:5000/api/campaigns",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"campaigns"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "100"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "96"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Jan 2026 19:23:33 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1768419218"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"565-TUWOb1XcYPrYnKO84nCFMs1YZq8\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Campaign created successfully\",\n    \"data\": {\n        \"brandId\": \"6907d1df20e9d6638b910d70\",\n        \"name\": \"Summer Collection Launch Campaign\",\n        \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n        \"budget\": 5000,\n        \"currency\": \"NGN\",\n        \"platform\": [\n            \"instagram\",\n            \"tiktok\"\n        ],\n        \"mainGoal\": \"brand_awareness\",\n        \"goals\": [\n            \"brand_awareness\",\n            \"engagement\"\n        ],\n        \"serviceType\": \"influencer_service\",\n        \"campaignDuration\": \"3 weeks\",\n        \"postVisibilityDuration\": \"30 days on page\",\n        \"compensationType\": \"paid\",\n        \"budgetRange\": {\n            \"min\": 200,\n            \"max\": 500,\n            \"currency\": \"NGN\"\n        },\n        \"deliverables\": [\n            \"feed_post\",\n            \"story\"\n        ],\n        \"requirements\": {\n            \"followerRange\": {\n                \"range\": \"micro\",\n                \"min\": 1000,\n                \"max\": 10000\n            },\n            \"followers\": {\n                \"min\": 1000\n            },\n            \"location\": [\n                \"United States\"\n            ],\n            \"niche\": [\n                \"fashion_beauty\"\n            ],\n            \"gender\": [\n                \"female\",\n                \"all\"\n            ],\n            \"_id\": \"6967ed3531b2fcd1efc5e02a\"\n        },\n        \"applicants\": [],\n        \"hiredCreators\": [],\n        \"status\": \"draft\",\n        \"dueDate\": \"2026-01-31T23:59:59.000Z\",\n        \"tags\": [\n            \"sustainable\",\n            \"fashion\",\n            \"summer\"\n        ],\n        \"isUrgent\": false,\n        \"isPublic\": true,\n        \"maxApplicants\": 50,\n        \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n        \"_id\": \"6967ed3531b2fcd1efc5e029\",\n        \"media\": [],\n        \"createdAt\": \"2026-01-14T19:23:33.466Z\",\n        \"updatedAt\": \"2026-01-14T19:23:33.466Z\",\n        \"__v\": 0,\n        \"applicantCount\": 0,\n        \"hiredCount\": 0,\n        \"remainingBudget\": 5000,\n        \"id\": \"6967ed3531b2fcd1efc5e029\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Campaign (Draft - Minimal)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Quick Draft Campaign\",\n  \"description\": \"This is a minimal draft campaign\",\n  \"status\": \"draft\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/campaigns",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns"
+							]
+						},
+						"description": "Create a minimal draft campaign with only name and description. Other fields can be added later via update."
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Campaigns",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/campaigns/me/campaigns?page=1&limit=10&status=draft",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"campaigns",
+								"me",
+								"campaigns"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "draft",
+									"description": "Filter by status: draft, open, accepting_bids, in_progress, completed, cancelled"
+								}
+							]
+						},
+						"description": "Get all campaigns for the authenticated brand. Can filter by status. Returns drafts and published campaigns."
+					},
+					"response": [
+						{
+							"name": "Get My Campaigns",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/api/campaigns/me/campaigns?page=1&limit=10&status=draft",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"campaigns",
+										"me",
+										"campaigns"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "status",
+											"value": "draft",
+											"description": "Filter by status: draft, open, accepting_bids, in_progress, completed, cancelled"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "content-security-policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "cross-origin-opener-policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "cross-origin-resource-policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "origin-agent-cluster",
+									"value": "?1"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "off"
+								},
+								{
+									"key": "x-download-options",
+									"value": "noopen"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "x-xss-protection",
+									"value": "0"
+								},
+								{
+									"key": "x-ratelimit-limit",
+									"value": "100"
+								},
+								{
+									"key": "x-ratelimit-remaining",
+									"value": "99"
+								},
+								{
+									"key": "date",
+									"value": "Wed, 14 Jan 2026 19:27:59 GMT"
+								},
+								{
+									"key": "x-ratelimit-reset",
+									"value": "1768419761"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "true"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"653-Y6DarepiXTDmygvk/PN8q1ujbIE\""
+								},
+								{
+									"key": "content-encoding",
+									"value": "br"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								},
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Campaigns retrieved successfully\",\n    \"data\": {\n        \"campaigns\": [\n            {\n                \"budgetRange\": {\n                    \"min\": 200,\n                    \"max\": 500,\n                    \"currency\": \"NGN\"\n                },\n                \"_id\": \"6967ed3531b2fcd1efc5e029\",\n                \"brandId\": \"6907d1df20e9d6638b910d70\",\n                \"name\": \"Summer Collection Launch Campaign\",\n                \"description\": \"We are launching our new sustainable summer collection and we're looking for passionate creators to showcase our products. The campaign focuses on authenticity, style, and a love for our planet.\",\n                \"budget\": 5000,\n                \"currency\": \"NGN\",\n                \"platform\": [\n                    \"instagram\",\n                    \"tiktok\"\n                ],\n                \"mainGoal\": \"brand_awareness\",\n                \"goals\": [\n                    \"brand_awareness\",\n                    \"engagement\"\n                ],\n                \"serviceType\": \"influencer_service\",\n                \"campaignDuration\": \"3 weeks\",\n                \"postVisibilityDuration\": \"30 days on page\",\n                \"compensationType\": \"paid\",\n                \"deliverables\": [\n                    \"feed_post\",\n                    \"story\"\n                ],\n                \"requirements\": {\n                    \"followerRange\": {\n                        \"range\": \"micro\",\n                        \"min\": 1000,\n                        \"max\": 10000\n                    },\n                    \"followers\": {\n                        \"min\": 1000\n                    },\n                    \"location\": [\n                        \"United States\"\n                    ],\n                    \"niche\": [\n                        \"fashion_beauty\"\n                    ],\n                    \"gender\": [\n                        \"female\",\n                        \"all\"\n                    ],\n                    \"_id\": \"6967ed3531b2fcd1efc5e02a\",\n                    \"id\": \"6967ed3531b2fcd1efc5e02a\"\n                },\n                \"applicants\": [],\n                \"hiredCreators\": [],\n                \"status\": \"draft\",\n                \"dueDate\": \"2026-01-31T23:59:59.000Z\",\n                \"tags\": [\n                    \"sustainable\",\n                    \"fashion\",\n                    \"summer\"\n                ],\n                \"isUrgent\": false,\n                \"isPublic\": true,\n                \"maxApplicants\": 50,\n                \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n                \"media\": [],\n                \"createdAt\": \"2026-01-14T19:23:33.466Z\",\n                \"updatedAt\": \"2026-01-14T19:23:33.466Z\",\n                \"__v\": 0,\n                \"applicantCount\": 0,\n                \"hiredCount\": 0,\n                \"remainingBudget\": 5000,\n                \"id\": \"6967ed3531b2fcd1efc5e029\",\n                \"proposalsCount\": 0\n            }\n        ],\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"totalItems\": 1,\n            \"itemsPerPage\": 10,\n            \"hasNextPage\": false,\n            \"hasPrevPage\": false,\n            \"nextPage\": null,\n            \"prevPage\": null,\n            \"totalResults\": 1\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Campaign",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Updated Campaign Name\",\n  \"description\": \"Updated description with more details\",\n  \"budget\": 500,\n  \"currency\": \"USD\",\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500,\n    \"currency\": \"USD\"\n  },\n  \"platform\": [\"instagram\", \"tiktok\", \"youtube\"],\n  \"deliverables\": [\"feed_post\", \"story\", \"reel\"],\n  \"dueDate\": \"2026-01-31T23:59:59.000Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/api/campaigns/6967ed3531b2fcd1efc5e029",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns",
+								"6967ed3531b2fcd1efc5e029"
+							]
+						},
+						"description": "Update a campaign. Can update any field. Use this to add missing fields to drafts before publishing."
+					},
+					"response": [
+						{
+							"name": "Update Campaign",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Updated Campaign Name\",\n  \"description\": \"Updated description with more details\",\n  \"budget\": 500,\n  \"currency\": \"USD\",\n  \"budgetRange\": {\n    \"min\": 200,\n    \"max\": 500,\n    \"currency\": \"USD\"\n  },\n  \"platform\": [\"instagram\", \"tiktok\", \"youtube\"],\n  \"deliverables\": [\"feed_post\", \"story\", \"reel\"],\n  \"dueDate\": \"2026-01-31T23:59:59.000Z\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:5000/api/campaigns/6967ed3531b2fcd1efc5e029",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"campaigns",
+										"6967ed3531b2fcd1efc5e029"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "100"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "97"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Jan 2026 19:30:53 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1768419785"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4cb-rp5pnlGfDnnvEEzw/yptBQRPqtc\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Campaign updated successfully\",\n    \"data\": {\n        \"budgetRange\": {\n            \"min\": 200,\n            \"max\": 500,\n            \"currency\": \"USD\"\n        },\n        \"_id\": \"6967ed3531b2fcd1efc5e029\",\n        \"brandId\": \"6907d1df20e9d6638b910d70\",\n        \"name\": \"Updated Campaign Name\",\n        \"description\": \"Updated description with more details\",\n        \"budget\": 500,\n        \"currency\": \"USD\",\n        \"platform\": [\n            \"instagram\",\n            \"tiktok\",\n            \"youtube\"\n        ],\n        \"mainGoal\": \"brand_awareness\",\n        \"goals\": [\n            \"brand_awareness\",\n            \"engagement\"\n        ],\n        \"serviceType\": \"influencer_service\",\n        \"campaignDuration\": \"3 weeks\",\n        \"postVisibilityDuration\": \"30 days on page\",\n        \"compensationType\": \"paid\",\n        \"deliverables\": [\n            \"feed_post\",\n            \"story\",\n            \"reel\"\n        ],\n        \"requirements\": {\n            \"followerRange\": {\n                \"range\": \"micro\",\n                \"min\": 1000,\n                \"max\": 10000\n            },\n            \"followers\": {\n                \"min\": 1000\n            },\n            \"location\": [\n                \"United States\"\n            ],\n            \"niche\": [\n                \"fashion_beauty\"\n            ],\n            \"gender\": [\n                \"female\",\n                \"all\"\n            ],\n            \"_id\": \"6967ed3531b2fcd1efc5e02a\"\n        },\n        \"applicants\": [],\n        \"hiredCreators\": [],\n        \"status\": \"draft\",\n        \"dueDate\": \"2026-01-31T23:59:59.000Z\",\n        \"tags\": [\n            \"sustainable\",\n            \"fashion\",\n            \"summer\"\n        ],\n        \"isUrgent\": false,\n        \"isPublic\": true,\n        \"maxApplicants\": 50,\n        \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n        \"media\": [],\n        \"createdAt\": \"2026-01-14T19:23:33.466Z\",\n        \"updatedAt\": \"2026-01-14T19:30:54.029Z\",\n        \"__v\": 0,\n        \"applicantCount\": 0,\n        \"hiredCount\": 0,\n        \"remainingBudget\": 500,\n        \"id\": \"6967ed3531b2fcd1efc5e029\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Publish Campaign",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/campaigns/6967ed3531b2fcd1efc5e029/publish",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"campaigns",
+								"6967ed3531b2fcd1efc5e029",
+								"publish"
+							]
+						},
+						"description": "Publish a draft campaign. Changes status from 'draft' to 'open'. Validates all required fields are present. Returns error if campaign is missing required fields or if dueDate is not in the future."
+					},
+					"response": [
+						{
+							"name": "Publish Campaign",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/api/campaigns/6967ed3531b2fcd1efc5e029/publish",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"campaigns",
+										"6967ed3531b2fcd1efc5e029",
+										"publish"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "content-security-policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "cross-origin-opener-policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "cross-origin-resource-policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "origin-agent-cluster",
+									"value": "?1"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "off"
+								},
+								{
+									"key": "x-download-options",
+									"value": "noopen"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "x-xss-protection",
+									"value": "0"
+								},
+								{
+									"key": "x-ratelimit-limit",
+									"value": "100"
+								},
+								{
+									"key": "x-ratelimit-remaining",
+									"value": "96"
+								},
+								{
+									"key": "date",
+									"value": "Wed, 14 Jan 2026 19:32:02 GMT"
+								},
+								{
+									"key": "x-ratelimit-reset",
+									"value": "1768419785"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "true"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"4cc-5Fi5VULougtOuay4OnNWe3JDhBo\""
+								},
+								{
+									"key": "content-encoding",
+									"value": "br"
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								},
+								{
+									"key": "transfer-encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Campaign published successfully\",\n    \"data\": {\n        \"budgetRange\": {\n            \"min\": 200,\n            \"max\": 500,\n            \"currency\": \"USD\"\n        },\n        \"_id\": \"6967ed3531b2fcd1efc5e029\",\n        \"brandId\": \"6907d1df20e9d6638b910d70\",\n        \"name\": \"Updated Campaign Name\",\n        \"description\": \"Updated description with more details\",\n        \"budget\": 500,\n        \"currency\": \"USD\",\n        \"platform\": [\n            \"instagram\",\n            \"tiktok\",\n            \"youtube\"\n        ],\n        \"mainGoal\": \"brand_awareness\",\n        \"goals\": [\n            \"brand_awareness\",\n            \"engagement\"\n        ],\n        \"serviceType\": \"influencer_service\",\n        \"campaignDuration\": \"3 weeks\",\n        \"postVisibilityDuration\": \"30 days on page\",\n        \"compensationType\": \"paid\",\n        \"deliverables\": [\n            \"feed_post\",\n            \"story\",\n            \"reel\"\n        ],\n        \"requirements\": {\n            \"followerRange\": {\n                \"range\": \"micro\",\n                \"min\": 1000,\n                \"max\": 10000\n            },\n            \"followers\": {\n                \"min\": 1000\n            },\n            \"location\": [\n                \"United States\"\n            ],\n            \"niche\": [\n                \"fashion_beauty\"\n            ],\n            \"gender\": [\n                \"female\",\n                \"all\"\n            ],\n            \"_id\": \"6967ed3531b2fcd1efc5e02a\"\n        },\n        \"applicants\": [],\n        \"hiredCreators\": [],\n        \"status\": \"open\",\n        \"dueDate\": \"2026-01-31T23:59:59.000Z\",\n        \"tags\": [\n            \"sustainable\",\n            \"fashion\",\n            \"summer\"\n        ],\n        \"isUrgent\": false,\n        \"isPublic\": true,\n        \"maxApplicants\": 50,\n        \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n        \"media\": [],\n        \"createdAt\": \"2026-01-14T19:23:33.466Z\",\n        \"updatedAt\": \"2026-01-14T19:32:02.826Z\",\n        \"__v\": 0,\n        \"applicantCount\": 0,\n        \"hiredCount\": 0,\n        \"remainingBudget\": 500,\n        \"id\": \"6967ed3531b2fcd1efc5e029\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Campaign",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:5000/api/campaigns/6967ef7e3567d423661f7b71",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns",
+								"6967ef7e3567d423661f7b71"
+							]
+						},
+						"description": "Delete a campaign permanently. Can delete drafts or published campaigns. Removes campaign from all saved lists."
+					},
+					"response": [
+						{
+							"name": "Delete Campaign",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost:5000/api/campaigns/6967ef7e3567d423661f7b71",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"campaigns",
+										"6967ef7e3567d423661f7b71"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "100"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "97"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Jan 2026 19:43:25 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1768420343"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "70"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"46-OxsbXb9gnYdCQAJmiXxiSpUmTes\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Campaign deleted successfully\",\n    \"data\": null\n}"
+						}
+					]
+				}
+			],
+			"description": "APIs for brands to manage their campaigns (create, update, publish, delete)"
+		},
+		{
+			"name": "Campaign Save/Bookmark (Creators)",
+			"item": [
+				{
+					"name": "Save Campaign",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/campaigns/6967ed3531b2fcd1efc5e029/save",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"campaigns",
+								"6967ed3531b2fcd1efc5e029",
+								"save"
+							]
+						},
+						"description": "Save/bookmark a campaign for later. Only works for published, public campaigns (not drafts). Prevents duplicate saves."
+					},
+					"response": [
+						{
+							"name": "Save Campaign",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:3000/api/campaigns/6967ed3531b2fcd1efc5e029/save",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"campaigns",
+										"6967ed3531b2fcd1efc5e029",
+										"save"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "content-security-policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "cross-origin-opener-policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "cross-origin-resource-policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "origin-agent-cluster",
+									"value": "?1"
+								},
+								{
+									"key": "referrer-policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "strict-transport-security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-dns-prefetch-control",
+									"value": "off"
+								},
+								{
+									"key": "x-download-options",
+									"value": "noopen"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "x-permitted-cross-domain-policies",
+									"value": "none"
+								},
+								{
+									"key": "x-xss-protection",
+									"value": "0"
+								},
+								{
+									"key": "x-ratelimit-limit",
+									"value": "100"
+								},
+								{
+									"key": "x-ratelimit-remaining",
+									"value": "98"
+								},
+								{
+									"key": "date",
+									"value": "Wed, 14 Jan 2026 19:52:10 GMT"
+								},
+								{
+									"key": "x-ratelimit-reset",
+									"value": "1768421056"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "true"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "content-length",
+									"value": "118"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"76-cteRFXMLD7oSAuXfeU5bmCyuezM\""
+								},
+								{
+									"key": "connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Campaign saved successfully\",\n    \"data\": {\n        \"campaignId\": \"6967ed3531b2fcd1efc5e029\",\n        \"saved\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Unsave Campaign",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/api/campaigns/6967ed3531b2fcd1efc5e029/save",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns",
+								"6967ed3531b2fcd1efc5e029",
+								"save"
+							]
+						},
+						"description": "Remove a campaign from saved list. Returns error if campaign is not saved."
+					},
+					"response": [
+						{
+							"name": "Unsave Campaign",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:5000/api/campaigns/6967ed3531b2fcd1efc5e029/save",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"campaigns",
+										"6967ed3531b2fcd1efc5e029",
+										"save"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "100"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "94"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Jan 2026 19:53:55 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1768421056"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "121"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"79-qUHb9ms1niNGz4QTnLGXR3cxf/U\""
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Campaign unsaved successfully\",\n    \"data\": {\n        \"campaignId\": \"6967ed3531b2fcd1efc5e029\",\n        \"saved\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Saved Campaigns",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/api/campaigns/saved?page=1&limit=10",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"campaigns",
+								"saved"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Items per page"
+								}
+							]
+						},
+						"description": "Get all saved/bookmarked campaigns for the authenticated user. Only returns published, public campaigns. Excludes drafts."
+					},
+					"response": [
+						{
+							"name": "Get Saved Campaigns",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3Njg0MTg1NDUsImV4cCI6MTc2OTAyMzM0NX0.kjkypPqIri97FIgPY0b1XS6FHL3UMYW0B8IqPrdbOtk",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:5000/api/campaigns/saved?page=1&limit=10",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"campaigns",
+										"saved"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"description": "Page number"
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "Items per page"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "100"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "95"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Jan 2026 19:53:26 GMT"
+								},
+								{
+									"key": "X-RateLimit-Reset",
+									"value": "1768421056"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "https://adpartnr-frontend.onrender.com"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin, Accept-Encoding"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5fc-TCLKH5ybI6wOfs77TkPstqq2ios\""
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Saved campaigns retrieved successfully\",\n    \"data\": {\n        \"campaigns\": [\n            {\n                \"budgetRange\": {\n                    \"min\": 200,\n                    \"max\": 500,\n                    \"currency\": \"USD\"\n                },\n                \"_id\": \"6967ed3531b2fcd1efc5e029\",\n                \"brandId\": {\n                    \"_id\": \"6907d1df20e9d6638b910d70\",\n                    \"name\": \"John Edegha\",\n                    \"email\": \"umejichioma49@gmail.com\",\n                    \"averageRating\": 0,\n                    \"id\": \"6907d1df20e9d6638b910d70\"\n                },\n                \"name\": \"Updated Campaign Name\",\n                \"description\": \"Updated description with more details\",\n                \"budget\": 500,\n                \"currency\": \"USD\",\n                \"platform\": [\n                    \"instagram\",\n                    \"tiktok\",\n                    \"youtube\"\n                ],\n                \"mainGoal\": \"brand_awareness\",\n                \"goals\": [\n                    \"brand_awareness\",\n                    \"engagement\"\n                ],\n                \"serviceType\": \"influencer_service\",\n                \"campaignDuration\": \"3 weeks\",\n                \"postVisibilityDuration\": \"30 days on page\",\n                \"compensationType\": \"paid\",\n                \"deliverables\": [\n                    \"feed_post\",\n                    \"story\",\n                    \"reel\"\n                ],\n                \"requirements\": {\n                    \"followerRange\": {\n                        \"range\": \"micro\",\n                        \"min\": 1000,\n                        \"max\": 10000\n                    },\n                    \"followers\": {\n                        \"min\": 1000\n                    },\n                    \"location\": [\n                        \"United States\"\n                    ],\n                    \"niche\": [\n                        \"fashion_beauty\"\n                    ],\n                    \"gender\": [\n                        \"female\",\n                        \"all\"\n                    ],\n                    \"_id\": \"6967ed3531b2fcd1efc5e02a\"\n                },\n                \"applicants\": [],\n                \"hiredCreators\": [],\n                \"status\": \"open\",\n                \"dueDate\": \"2026-01-31T23:59:59.000Z\",\n                \"tags\": [\n                    \"sustainable\",\n                    \"fashion\",\n                    \"summer\"\n                ],\n                \"isUrgent\": false,\n                \"isPublic\": true,\n                \"maxApplicants\": 50,\n                \"applicationDeadline\": \"2024-12-31T23:59:59.000Z\",\n                \"media\": [],\n                \"createdAt\": \"2026-01-14T19:23:33.466Z\",\n                \"updatedAt\": \"2026-01-14T19:32:02.826Z\",\n                \"__v\": 0,\n                \"applicantCount\": 0,\n                \"hiredCount\": 0,\n                \"remainingBudget\": 500,\n                \"id\": \"6967ed3531b2fcd1efc5e029\"\n            }\n        ],\n        \"pagination\": {\n            \"currentPage\": 1,\n            \"totalPages\": 1,\n            \"totalItems\": 1,\n            \"itemsPerPage\": 10,\n            \"hasNextPage\": false,\n            \"hasPrevPage\": false,\n            \"nextPage\": null,\n            \"prevPage\": null,\n            \"totalResults\": 1\n        }\n    }\n}"
+						}
+					]
+				}
+			],
+			"description": "APIs for creators (or any user) to save/bookmark campaigns and view saved campaigns"
+		},
+		{
+			"name": "Public Campaign APIs",
+			"item": [
+				{
+					"name": "Get All Campaigns (Public)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/campaigns?page=1&limit=10&status=open",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"campaigns"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "status",
+									"value": "open",
+									"description": "Filter by status. Default shows open/accepting_bids campaigns."
+								},
+								{
+									"key": "platform",
+									"value": "instagram",
+									"description": "Filter by platform",
+									"disabled": true
+								},
+								{
+									"key": "serviceType",
+									"value": "influencer_service",
+									"description": "Filter by service type",
+									"disabled": true
+								},
+								{
+									"key": "niche",
+									"value": "fashion_beauty",
+									"description": "Filter by niche",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all public campaigns (for creators to browse). Excludes drafts. Can filter by status, platform, serviceType, niche, etc."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Campaign by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/campaigns/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"campaigns",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{campaignId}}",
+									"description": "Campaign ID"
+								}
+							]
+						},
+						"description": "Get campaign details by ID. Public endpoint - no auth required."
+					},
+					"response": []
+				}
+			],
+			"description": "Public APIs for browsing campaigns (no authentication required)"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://adpartnr.onrender.com",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string",
+			"description": "JWT token from login. Get from POST /api/auth/login"
+		},
+		{
+			"key": "campaignId",
+			"value": "",
+			"type": "string",
+			"description": "Campaign ID - automatically set after creating a campaign"
+		}
+	]
+}

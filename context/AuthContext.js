@@ -11,7 +11,7 @@
  * - restoreSession: Function to restore session from AsyncStorage
  */
 
-import React, { createContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useRef } from 'react';
 import apiClient, { getToken, getUser, setToken, setUser, clearAuthData, setAuthLogoutCallback } from '../services/apiClient';
 import { setAuthToken, clearAuthToken } from '../services/api';
 import { clearCache, clearAllAppStorage } from '../utils/cache';
@@ -41,12 +41,21 @@ export const AuthProvider = ({ children }) => {
   const [user, setUserState] = useState(null);
   const [token, setTokenState] = useState(null);
   const [loading, setLoading] = useState(true);
+  const messagingUnsubRef = useRef(null);
 
   /**
    * Initialize Firebase Messaging and Auth
    */
   const setupFirebase = useCallback(async () => {
     try {
+      // Remove previous onMessage listener so we never stack multiple (causes duplicate notifications)
+      if (messagingUnsubRef.current) {
+        try {
+          messagingUnsubRef.current();
+        } catch (_) {}
+        messagingUnsubRef.current = null;
+      }
+
       // 1. Get Firebase custom token from backend
       try {
         const tokenResponse = await apiClient.get('/messages/token');
@@ -71,10 +80,11 @@ export const AuthProvider = ({ children }) => {
         console.warn('[Auth] Notifications permission not granted');
       }
 
-      // 3. Get and Update FCM Token
+      // 3. Get and Update FCM Token (delayed so previous account's logout clear is processed first when switching users on same device)
       const fcmToken = await messaging().getToken();
       if (fcmToken) {
-        console.log('[Auth] FCM Token generated');
+        await new Promise((r) => setTimeout(r, 2000)); // 2s delay: avoid race with previous user's logout clear
+        console.log('[Auth] FCM Token registering for current user');
         await apiClient.put('/auth/fcm-token', { fcmToken });
       }
       // 3b. Handle token refresh
@@ -87,35 +97,45 @@ export const AuthProvider = ({ children }) => {
         }
       });
 
-      // 4. Set up message listeners – show system notification in foreground
+      // 4. Foreground: show one notification per message (dedupe by conversationId + messageId)
       const notifee = require('@notifee/react-native').default;
       const { AndroidImportance } = require('@notifee/react-native');
       try {
-        // Android 13+ requires runtime POST_NOTIFICATIONS permission
         await notifee.requestPermission();
       } catch (_) {}
-      // Ensure channel
       try {
         await notifee.createChannel({
           id: 'default',
           name: 'General Notifications',
-          // Use HIGH to show heads-up notifications
           importance: AndroidImportance.HIGH,
         });
       } catch (_) {}
+      const shownKeys = new Map(); // key -> timestamp; avoid showing same notification twice
+      const DEDUPE_MS = 60000;
       const unsubscribe = messaging().onMessage(async remoteMessage => {
         try {
           const title = remoteMessage?.notification?.title || remoteMessage?.data?.title || 'Notification';
           const body = remoteMessage?.notification?.body || remoteMessage?.data?.body || '';
+          const convId = remoteMessage?.data?.conversationId || '';
+          const msgId = remoteMessage?.data?.messageId || '';
+          const key = (convId && msgId) ? `msg:${convId}:${msgId}` : `fallback:${title}:${(body || '').slice(0, 50)}`;
+          const now = Date.now();
+          const at = shownKeys.get(key);
+          if (at != null && (now - at) < DEDUPE_MS) return;
+          shownKeys.set(key, now);
+          setTimeout(() => shownKeys.delete(key), DEDUPE_MS + 1000);
+          const notifId = (convId && msgId) ? `msg_${convId}_${msgId}` : `msg_${now}`;
           await notifee.displayNotification({
+            id: notifId,
             title,
             body,
             android: { channelId: 'default', pressAction: { id: 'default' } },
           });
         } catch (e) {
-          console.warn('[Auth] Foreground notification display error:', e?.message);
+          console.warn('[Auth] Foreground notification error:', e?.message);
         }
       });
+      messagingUnsubRef.current = unsubscribe;
 
       // 5. Handle notification taps when app in background
       messaging().onNotificationOpenedApp(remoteMessage => {
@@ -280,6 +300,20 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
       console.log('[Auth] Signing out – deep clear');
 
+      // 0. Clear FCM token on server FIRST (before clearing storage) so this device stops receiving push for this user.
+      // Order is critical: apiClient reads token from AsyncStorage; if we clear storage first, the request would be unauthenticated.
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          await apiClient.put('/auth/fcm-token', { fcmToken: null });
+          console.log('[Auth] FCM token cleared on server');
+          await new Promise((r) => setTimeout(r, 400)); // give server time to persist before we clear local state
+          break;
+        } catch (e) {
+          console.warn('[Auth] Clear FCM token on logout:', e?.message);
+          if (attempt === 0) await new Promise((r) => setTimeout(r, 500)); // retry once after short delay
+        }
+      }
+
       // 1. Wipe all app-related AsyncStorage (every key starting with @) and in-memory cache
       try {
         await clearAllAppStorage();
@@ -294,14 +328,21 @@ export const AuthProvider = ({ children }) => {
       }
       // 3. Clear in-memory token used by api.js and fetch
       clearAuthToken();
-      // 4. Sign out from Firebase so next user doesn't get previous Firebase session
+      // 4. Unsubscribe FCM foreground listener so we never show notifications for logged-out user
+      if (messagingUnsubRef.current) {
+        try {
+          messagingUnsubRef.current();
+        } catch (_) {}
+        messagingUnsubRef.current = null;
+      }
+      // 5. Sign out from Firebase so next user doesn't get previous Firebase session
       try {
         await auth().signOut();
       } catch (e) {
         console.warn('[Auth] Firebase signOut:', e?.message);
       }
 
-      // 5. Update context state
+      // 6. Update context state
       setTokenState(null);
       setUserState(null);
 

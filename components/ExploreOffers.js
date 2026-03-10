@@ -61,6 +61,7 @@ const ExploreOffers = ({ navigation, route, insideAppNavigator = false, canGoBac
     category: 'All',
     priceRange: 'All',
     location: 'All',
+    locationObject: { city: '', state: '', country: '' },
     followers: 'All',
     serviceDeliverable: 'All',
     status: 'All',
@@ -70,6 +71,7 @@ const ExploreOffers = ({ navigation, route, insideAppNavigator = false, canGoBac
     category: 'All',
     priceRange: 'All',
     location: 'All',
+    locationObject: { city: '', state: '', country: '' },
     followers: 'All',
     serviceDeliverable: 'All',
     status: 'All',
@@ -129,56 +131,56 @@ const ExploreOffers = ({ navigation, route, insideAppNavigator = false, canGoBac
 
         let response;
 
-        // If creator, use getUserOffers to get their own offers
+        const buildLocationAndFilters = () => {
+          const filters = { page: 1, limit: 50 };
+          if (appliedFilters.platform !== 'All') {
+            filters.platform = appliedFilters.platform.toLowerCase();
+          }
+          if (appliedFilters.category !== 'All') {
+            filters.category = appliedFilters.category;
+          }
+          if (appliedFilters.priceRange !== 'All') {
+            if (appliedFilters.priceRange.includes('Under')) {
+              filters.maxRate = 100;
+            } else if (appliedFilters.priceRange.includes('$100 - $300')) {
+              filters.minRate = 100;
+              filters.maxRate = 300;
+            } else if (appliedFilters.priceRange.includes('$300 - $500')) {
+              filters.minRate = 300;
+              filters.maxRate = 500;
+            } else if (appliedFilters.priceRange.includes('Over')) {
+              filters.minRate = 500;
+            }
+          }
+          const loc = appliedFilters.locationObject || {};
+          if (loc.country && loc.country.trim()) filters.country = loc.country.trim();
+          if (loc.state && loc.state.trim()) filters.state = loc.state.trim();
+          if (loc.city && loc.city.trim()) filters.city = loc.city.trim();
+          if (appliedFilters.serviceDeliverable !== 'All') {
+            const map = { Reel: 'reel', Post: 'feed_post', Story: 'story', Video: 'short_video' };
+            const val = map[appliedFilters.serviceDeliverable];
+            if (val) filters.serviceType = val;
+          }
+          return filters;
+        };
+
         if (isCreator) {
           if (searchText.trim()) {
-            // For creators, still use search if they have search text
             response = await offersService.searchOffers(searchText, { page: 1, limit: 50 });
           } else {
-            // Get creator's own offers
-            const userFilters = { page: 1, limit: 50 };
+            const filters = buildLocationAndFilters();
             if (appliedFilters.status && appliedFilters.status !== 'All') {
-              userFilters.status = appliedFilters.status.toLowerCase();
+              filters.status = appliedFilters.status.toLowerCase();
             }
-            response = await offersService.getUserOffers(userFilters);
+            const creatorId = user?.id || user?._id;
+            if (creatorId) filters.creatorId = creatorId;
+            response = await offersService.getAllOffers(filters);
           }
         } else {
-          // For brands, use regular offers API
           if (searchText.trim()) {
             response = await offersService.searchOffers(searchText, { page: 1, limit: 50 });
           } else {
-            // Build filters for API (category = slug, platform, minRate/maxRate, city/state)
-            const filters = { page: 1, limit: 50 };
-            if (appliedFilters.platform !== 'All') {
-              filters.platform = appliedFilters.platform.toLowerCase();
-            }
-            if (appliedFilters.category !== 'All') {
-              filters.category = appliedFilters.category;
-            }
-            if (appliedFilters.priceRange !== 'All') {
-              if (appliedFilters.priceRange.includes('Under')) {
-                filters.maxRate = 100;
-              } else if (appliedFilters.priceRange.includes('$100 - $300')) {
-                filters.minRate = 100;
-                filters.maxRate = 300;
-              } else if (appliedFilters.priceRange.includes('$300 - $500')) {
-                filters.minRate = 300;
-                filters.maxRate = 500;
-              } else if (appliedFilters.priceRange.includes('Over')) {
-                filters.minRate = 500;
-              }
-            }
-            if (appliedFilters.location !== 'All') {
-              const locationParts = appliedFilters.location.split(', ');
-              if (locationParts.length > 0) filters.city = locationParts[0];
-              if (locationParts.length > 1) filters.state = locationParts[1];
-            }
-            if (appliedFilters.serviceDeliverable !== 'All') {
-              const map = { Reel: 'reel', Post: 'feed_post', Story: 'story', Video: 'short_video' };
-              const val = map[appliedFilters.serviceDeliverable];
-              if (val) filters.serviceType = val;
-            }
-
+            const filters = buildLocationAndFilters();
             response = await offersService.getOffersWithFilters(filters);
           }
         }
@@ -473,6 +475,7 @@ const ExploreOffers = ({ navigation, route, insideAppNavigator = false, canGoBac
       category: 'All',
       priceRange: 'All',
       location: 'All',
+      locationObject: { city: '', state: '', country: '' },
       followers: 'All',
       serviceDeliverable: 'All',
       status: 'All',
@@ -817,11 +820,19 @@ const ExploreOffers = ({ navigation, route, insideAppNavigator = false, canGoBac
                 <View style={styles.locationPickerWrap}>
                   <LocationPicker
                     label={null}
-                    value={{}}
+                    value={selectedFilters.locationObject || {}}
                     onChange={(loc) => {
-                      const parts = [loc.city, loc.state, loc.country].filter(Boolean);
-                      const display = parts.slice(0, 2).join(', ') || (loc.country || 'All') || 'All';
-                      selectFilterOption('location', display || 'All');
+                      const city = (loc.city || '').trim();
+                      const state = (loc.state || '').trim();
+                      const country = (loc.country || '').trim();
+                      const locationObject = { city, state, country };
+                      const parts = [city, state, country].filter(Boolean);
+                      const display = parts.length > 0 ? parts.join(', ') : 'All';
+                      setSelectedFilters(prev => ({
+                        ...prev,
+                        location: display,
+                        locationObject,
+                      }));
                     }}
                   />
                 </View>

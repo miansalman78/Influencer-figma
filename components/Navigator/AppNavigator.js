@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Dashboard from '../Dashboard';
@@ -52,28 +52,35 @@ const AppNavigator = ({ navigation, route, onTabChange, onUpdateParams }) => {
   const [internalHistory, setInternalHistory] = useState([]);
   const [screenParams, setScreenParams] = useState(route?.params || {});
   const [unreadChatCount, setUnreadChatCount] = useState(0);
+  const unreadUnsubRef = useRef(null);
 
-  // Subscribe to unread messages count
+  // Single unread-count subscription; cleanup calls ref so previous listener is removed when effect re-runs
   useEffect(() => {
-    // Try to get userId from various possible locations in params
     const userData = screenParams?.user || route?.params?.user;
     const userId = userData?._id || userData?.id;
     const role = userData?.role || route?.params?.role || userRole;
 
-    if (userId && role) {
-      console.log('[AppNavigator] Subscribing to unread count for:', userId, role);
-      // Dynamic import to avoid circular dependency
-      let unsubscribe;
-      import('../../services/chat').then(({ subscribeToTotalUnreadCount }) => {
-        unsubscribe = subscribeToTotalUnreadCount(userId, role, (count) => {
-          setUnreadChatCount(count);
-        });
-      }).catch(err => console.error('Failed to subscribe to unread count:', err));
+    if (!userId || !role) return;
 
-      return () => {
-        if (unsubscribe) unsubscribe();
-      };
+    let cancelled = false;
+    if (unreadUnsubRef.current) {
+      unreadUnsubRef.current();
+      unreadUnsubRef.current = null;
     }
+    import('../../services/chat').then(({ subscribeToTotalUnreadCount }) => {
+      if (cancelled) return;
+      unreadUnsubRef.current = subscribeToTotalUnreadCount(userId, role, (count) => {
+        if (!cancelled) setUnreadChatCount(count);
+      });
+    }).catch(err => console.error('Failed to subscribe to unread count:', err));
+
+    return () => {
+      cancelled = true;
+      if (unreadUnsubRef.current) {
+        unreadUnsubRef.current();
+        unreadUnsubRef.current = null;
+      }
+    };
   }, [screenParams?.user, route?.params?.user, userRole, route?.params?.role]);
 
   // Sync internal params with parent to persist state across unmounts
@@ -172,11 +179,16 @@ const AppNavigator = ({ navigation, route, onTabChange, onUpdateParams }) => {
       if (shellScreens.includes(screen)) {
         const replaceParamsScreens = ['OfferDetails', 'CampaignDetails', 'OrderDetails', 'ProposalDetails'];
         const shouldReplaceParams = replaceParamsScreens.includes(screen);
+        const shouldReplace = params?.replace === true;
 
         if (targetTab !== activeTab) {
-          setInternalHistory(prev => [...prev, activeTab]);
+          if (!shouldReplace) {
+            setInternalHistory(prev => [...prev, activeTab]);
+          }
           setActiveTab(targetTab);
-          setScreenParams(() => ({ ...(params || {}) }));
+          const cleanParams = params ? { ...params } : {};
+          delete cleanParams.replace;
+          setScreenParams(() => ({ ...cleanParams }));
           if (onTabChange) onTabChange(targetTab);
         } else {
           if (params) {

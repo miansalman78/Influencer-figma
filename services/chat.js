@@ -6,11 +6,7 @@ const CONVERSATIONS_COLLECTION = 'conversations';
 const MESSAGES_COLLECTION = 'messages';
 
 /**
- * Send a message in a conversation
- * @param {string} conversationId 
- * @param {object} messageData 
- * @param {string} senderId 
- * @param {string} senderRole 
+ * Send a message in a conversation. Notify backend once per message (backend dedupes by messageId).
  */
 export const sendMessage = async (conversationId, messageData, senderId, senderRole) => {
     try {
@@ -62,15 +58,16 @@ export const sendMessage = async (conversationId, messageData, senderId, senderR
 
         console.log(`[ChatService] Conversation unread count incremented for: ${roleToIncrement}`);
 
-        // 4. Trigger backend notification (best effort - don't fail message if notification fails)
+        // 4. Notify backend once (one notification per messageId; server dedupes)
         try {
             await apiClient.post('/messages/notify', {
                 recipientId,
                 messageText: messageData.text || (messageData.isFile ? '📎 File attached' : 'New Message'),
-                conversationId
+                conversationId,
+                messageId: msgRef.id,
             });
         } catch (notifErr) {
-            console.warn('[ChatService] Failed to send notification:', notifErr.message);
+            console.warn('[ChatService] Notify failed:', notifErr.message);
         }
 
         return true;
@@ -213,19 +210,26 @@ export const subscribeToConversations = (userId, role, callback, onError) => {
         );
 };
 
+// Debounce mark-as-read per (conversationId, role) so multiple rapid calls only hit Firestore once
+const markReadPending = new Map();
+const MARK_READ_DEBOUNCE_MS = 2500;
+const getMarkReadKey = (conversationId, userRole) => `${conversationId}:${(userRole || '').toLowerCase()}`;
+
 /**
- * Mark messages in a conversation as read
- * @param {string} conversationId 
- * @param {string} userRole - 'brand' or 'influencer'
+ * Mark messages in a conversation as read (debounced so duplicate callers only trigger one update)
  */
 export const markConversationAsRead = async (conversationId, userRole) => {
+    const key = getMarkReadKey(conversationId, userRole);
+    const now = Date.now();
+    const last = markReadPending.get(key);
+    if (last != null && (now - last) < MARK_READ_DEBOUNCE_MS) return;
+    markReadPending.set(key, now);
+    setTimeout(() => markReadPending.delete(key), MARK_READ_DEBOUNCE_MS + 500);
+
     try {
         const normalizedRole = userRole?.toLowerCase();
         const roleKey = (normalizedRole === 'brand') ? 'brand' : 'influencer';
 
-        console.log(`[ChatService] Marking ${conversationId} as read for ${normalizedRole} (${roleKey})`);
-
-        // Update unread count for this user to 0
         await db.collection(CONVERSATIONS_COLLECTION)
             .doc(conversationId)
             .update({

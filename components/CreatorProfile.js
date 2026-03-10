@@ -206,6 +206,14 @@ const CreatorProfile = ({ navigation, route, insideAppNavigator = false }) => {
     return total.toString();
   };
 
+  // Round engagement rate to max 3 decimal places (e.g. 0.025623268698060944% -> 0.026%)
+  const formatEngagementRate = (value) => {
+    const n = Number(value);
+    if (value == null || !Number.isFinite(n) || n <= 0) return '0%';
+    const fixed = parseFloat(n.toFixed(3));
+    return fixed + '%';
+  };
+
   const calculateEngagementRate = () => {
     // 1. Prefer API aggregate (profile API returns totalEngagementRate from User.socialAccounts)
     if (profile?.totalEngagementRate != null && Number(profile.totalEngagementRate) > 0) {
@@ -1752,6 +1760,39 @@ const CreatorProfile = ({ navigation, route, insideAppNavigator = false }) => {
                 </View>
               )}
 
+              {/* Offers (before Platform Metrics) – tappable cards that open offer details */}
+              {offersLoaded && creatorOffers.length > 0 && (
+                <View style={styles.infoSection}>
+                  <Text style={styles.infoSectionTitle}>Offers</Text>
+                  {creatorOffers.map((o) => {
+                    const offerId = o._id || o.id;
+                    const title = o.title || 'Offer';
+                    const priceStr = o.rate
+                      ? (typeof o.rate === 'object' && (o.rate.usd != null || o.rate.ngn != null)
+                        ? getCompactDualPrice(o.rate)
+                        : (o.currency === 'NGN' ? `₦${o.rate}` : `$${o.rate}`))
+                      : (o.isNegotiable ? 'Negotiable' : null);
+                    return (
+                      <TouchableOpacity
+                        key={offerId}
+                        style={styles.offerCard}
+                        activeOpacity={0.7}
+                        onPress={() => navigation?.navigate('OfferDetails', { offerId })}
+                      >
+                        <View style={styles.offerCardContent}>
+                          <MaterialIcons name="local-offer" size={22} color="#337DEB" style={styles.offerCardIcon} />
+                          <View style={styles.offerCardText}>
+                            <Text style={styles.offerCardTitle} numberOfLines={2}>{title}</Text>
+                            {priceStr ? <Text style={styles.offerCardSubtitle}>{priceStr}</Text> : null}
+                          </View>
+                          <MaterialIcons name="chevron-right" size={24} color="#9ca3af" />
+                        </View>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              )}
+
               {/* Platform Metrics (API returns platformReach; also support platformMetrics) */}
               {((profile?.platformReach && profile.platformReach.length > 0) || (profile?.platformMetrics && profile.platformMetrics.length > 0)) && (
                 <View style={styles.infoSection}>
@@ -1765,24 +1806,12 @@ const CreatorProfile = ({ navigation, route, insideAppNavigator = false }) => {
                       <View style={styles.metricDetails}>
                         <Text style={styles.metricLabel}>Followers: <Text style={styles.metricValue}>{formatFollowerCount(metric.followers)}</Text></Text>
                         {Number(metric.engagementRate || 0) > 0 && (
-                          <Text style={styles.metricLabel}>Engagement: <Text style={styles.metricValue}>{metric.engagementRate + '%'}</Text></Text>
+                          <Text style={styles.metricLabel}>Engagement: <Text style={styles.metricValue}>{formatEngagementRate(metric.engagementRate)}</Text></Text>
                         )}
                         {metric.avgViews && (
                           <Text style={styles.metricLabel}>Avg Views: <Text style={styles.metricValue}>{formatFollowerCount(metric.avgViews)}</Text></Text>
                         )}
                       </View>
-                    </View>
-                  ))}
-                </View>
-              )}
-
-              {offersLoaded && creatorOffers.length > 0 && (
-                <View style={styles.infoSection}>
-                  <Text style={styles.infoSectionTitle}>Offers</Text>
-                  {creatorOffers.map((o) => (
-                    <View key={o._id || o.id} style={styles.infoRow}>
-                      <MaterialIcons name="local-offer" size={20} color="#337DEB" />
-                      <Text style={styles.infoText} numberOfLines={1}>{o.title || 'Offer'}</Text>
                     </View>
                   ))}
                 </View>
@@ -3228,6 +3257,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
     marginBottom: 8,
+  },
+  offerCard: {
+    backgroundColor: '#f9fafb',
+    borderRadius: 10,
+    marginBottom: 10,
+    overflow: 'hidden',
+  },
+  offerCardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 14,
+  },
+  offerCardIcon: {
+    marginRight: 12,
+  },
+  offerCardText: {
+    flex: 1,
+  },
+  offerCardTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#1f2937',
+    marginBottom: 2,
+  },
+  offerCardSubtitle: {
+    fontSize: 13,
+    color: '#6b7280',
   },
   categoryTags: {
     flexDirection: 'row',

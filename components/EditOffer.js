@@ -380,10 +380,12 @@ const EditOffer = ({ navigation, route }) => {
             const offerId = offer._id || offer.id;
 
             const response = await offersService.publishOffer(offerId);
+            const ok = response && (response.success === true || response.data != null);
 
-            if (response && response.success) {
+            if (ok) {
                 showToast('Your offer is now live and visible to brands.', 'success');
-                navigation.navigate('ExploreOffers', { refresh: true });
+                // Close this screen and open My Offers (replace so back doesn't return to edit)
+                navigation.navigate('ExploreOffers', { refresh: true, replace: true });
             } else {
                 const msg = response?.message || response?.data?.message || 'Failed to publish offer';
                 showPublishFieldError(msg);

@@ -1,0 +1,795 @@
+{
+	"info": {
+		"_postman_id": "6f4aba14-c045-473f-a918-d241f1075a8c",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"unigwechioma2200@gmail.com\",\n  \"password\": \"Secret123\",\n  \"role\": \"brand\",\n  \"creatorRole\": \"influencer\",\n  \"location\": {\n    \"city\": \"Lagos\",\n    \"state\": \"Lagos State\",\n    \"country\": \"Nigeria\",\n    \"coordinates\": {\n      \"latitude\": 6.5244,\n      \"longitude\": 3.3792\n    }\n  }\n}"
+				},
+				"url": {
+					"raw": "https://adpartnr.onrender.com/api/auth/signup",
+					"protocol": "https",
+					"host": [
+						"adpartnr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				},
+				"description": "#### **For Creator (Influencer)**\n\n{ \"name\": \"John Doe\", \"email\": \"john.doe@example.com\", \"password\": \"SecurePass123\", \"role\": \"creator\", \"creatorRole\": \"influencer\"}\n\n#### **For Creator (Service Creator)**\n\n{ \"name\": \"Jane Smith\", \"email\": \"jane.smith@example.com\", \"password\": \"SecurePass123\", \"role\": \"creator\", \"creatorRole\": \"service_creator\"}\n\n#### **For Brand**\n\n{ \"name\": \"Brand Company\", \"email\": \"contact@brandcompany.com\", \"password\": \"SecurePass123\", \"role\": \"brand\"}\n\n#### **Missing creatorRole for creator (400 Bad Request)**\n\n{  \n\"success\": false,  \n\"message\": \"Validation failed\",  \n\"errors\": \\[  \n{  \n\"field\": \"creatorRole\",  \n\"message\": \"Creator role is required when role is creator\",  \n\"value\": null  \n}  \n\\]  \n}"
+			},
+			"response": [
+				{
+					"name": "User Signup",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"password\": \"SecurePass123\",\n  \"role\": \"creator\",\n  \"creatorRole\": \"service_creator\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "99"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 25 Oct 2025 17:17:54 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1761413544"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "650"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"28a-c9Zu6TKRI9zJ/AuEiCGUfpOn06I\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"User registered successfully\",\n    \"data\": {\n        \"user\": {\n            \"name\": \"Jane Smith\",\n            \"email\": \"jane.smith@example.com\",\n            \"role\": \"creator\",\n            \"creatorRole\": \"service_creator\",\n            \"services\": [],\n            \"walletBalance\": 0,\n            \"ratings\": 0,\n            \"totalReviews\": 0,\n            \"isActive\": true,\n            \"_id\": \"68fd0642b5dc4662f6674d8b\",\n            \"lastActive\": \"2025-10-25T17:17:54.810Z\",\n            \"createdAt\": \"2025-10-25T17:17:54.815Z\",\n            \"updatedAt\": \"2025-10-25T17:17:54.815Z\",\n            \"__v\": 0,\n            \"averageRating\": 0,\n            \"id\": \"68fd0642b5dc4662f6674d8b\"\n        },\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGZkMDY0MmI1ZGM0NjYyZjY2NzRkOGIiLCJpYXQiOjE3NjE0MTI2NzUsImV4cCI6MTc2MjAxNzQ3NX0.xutSiWFBshYwC1JZzKNGej_P13euRJjKWfDXu3IENIc\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "User Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"unigwechioma20@gmail.com\",\n  \"password\": \"Chioma123\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/auth/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login Copy",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"unigwechioma20@gmail.com\",\n  \"password\": \"Secret12345#\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/auth/login",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Forgot Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"unigwechioma20@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/auth/forgot-password",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"forgot-password"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Forgot Password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"unigwechioma20@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/forgot-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"forgot-password"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "99"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 16 Dec 2025 03:20:48 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1765856068"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "79"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4f-WiilKe6IByPqcD2M9OEYx6BRL0M\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Password reset link sent to your email\",\n    \"data\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Reset Password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\": \"6864eca852400b720b4d96e5d7528d2796fd52664416f100552d82590c8516f2\",\n    \"password\": \"Secret12345#\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/auth/reset-password",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"reset-password"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Reset Password",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"6864eca852400b720b4d96e5d7528d2796fd52664416f100552d82590c8516f2\",\n    \"password\": \"Secret12345#\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "96"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 16 Dec 2025 03:28:46 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1765856464"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "68"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"44-kUSwhfxhPM/5wpVY5srytwqbeSk\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Password reset successfully\",\n    \"data\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Change Password",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGZkMWEzNjZjZmI1MmE3NGQ3MTMyNmMiLCJpYXQiOjE3NjU4NTU4NzEsImV4cCI6MTc2NjQ2MDY3MX0.eoO36glMmHDa1vAQFkMD1-LePnVR7nYC7zrzWQXpgu4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"oldPassword\": \"Secret12345#\",\n    \"newPassword\": \"Chioma123\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/auth/change-password",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"change-password"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Change Password",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGZkMWEzNjZjZmI1MmE3NGQ3MTMyNmMiLCJpYXQiOjE3NjU4NTU4NzEsImV4cCI6MTc2NjQ2MDY3MX0.eoO36glMmHDa1vAQFkMD1-LePnVR7nYC7zrzWQXpgu4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\": \"Secret12345#\",\n    \"newPassword\": \"Chioma123\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/auth/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Security-Policy",
+							"value": "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Resource-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Origin-Agent-Cluster",
+							"value": "?1"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "no-referrer"
+						},
+						{
+							"key": "Strict-Transport-Security",
+							"value": "max-age=15552000; includeSubDomains"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-DNS-Prefetch-Control",
+							"value": "off"
+						},
+						{
+							"key": "X-Download-Options",
+							"value": "noopen"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Permitted-Cross-Domain-Policies",
+							"value": "none"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "0"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "100"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "93"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 16 Dec 2025 03:31:52 GMT"
+						},
+						{
+							"key": "X-RateLimit-Reset",
+							"value": "1765856464"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:3000"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin, Accept-Encoding"
+						},
+						{
+							"key": "Access-Control-Allow-Credentials",
+							"value": "true"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "70"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"46-NqTYv3ZKBkUyIjVZ5fwbz6+nOlw\""
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"Password changed successfully\",\n    \"data\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Current User",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTA3ZDFkZjIwZTlkNjYzOGI5MTBkNzAiLCJpYXQiOjE3NjcwNDIzMzUsImV4cCI6MTc2NzY0NzEzNX0._ckQOeoh85v5iZL7f5WLcdNXJFdRqYLnqWCko87NHkI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseURL}}/api/auth/me",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"me"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
