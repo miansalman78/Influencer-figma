@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1033505323802",
+    "project_id": "adpartnr-54a47",
+    "storage_bucket": "adpartnr-54a47.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033505323802:android:4a3c7ed822c1660fea0aa3",
+        "android_client_info": {
+          "package_name": "com.influencernative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033505323802-bntm6g4mjs0ror1c8sjvkoq0otgtjus1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.influencernative",
+            "certificate_hash": "030fe05e9db2eb5e09da5d82de387d586528d548"
+          }
+        },
+        {
+          "client_id": "1033505323802-em2qj05gl92gig5jd2bcv8jqlfac5l47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.influencernative",
+            "certificate_hash": "761bce5d7acc7f13eb5809868250a5e58f25bc7b"
+          }
+        },
+        {
+          "client_id": "1033505323802-ttj405p3sh4tol3cvhn0j0b6vvfe721c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.influencernative",
+            "certificate_hash": "4fe12dcdb28073e20a3135ad4c092b1e7b3edc97"
+          }
+        },
+        {
+          "client_id": "1033505323802-oss0vn3072go8b0kio986uop1u35vq3m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoqF_iEDexCUYGABTmvCqZ1hRNpW0IPxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033505323802-oss0vn3072go8b0kio986uop1u35vq3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

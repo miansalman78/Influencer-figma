@@ -1,0 +1,60 @@
+{
+  "name": "adpartnr",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "lint": "eslint .",
+    "start": "react-native start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@notifee/react-native": "^7.8.1",
+    "@invertase/react-native-apple-authentication": "^2.5.1",
+    "@react-native-async-storage/async-storage": "^1.24.0",
+    "@react-native-community/datetimepicker": "^8.5.1",
+    "@react-native-firebase/app": "^23.8.6",
+    "@react-native-firebase/auth": "^23.8.6",
+    "@react-native-firebase/firestore": "^23.8.6",
+    "@react-native-firebase/messaging": "^23.8.6",
+    "@react-native-google-signin/google-signin": "^16.1.1",
+    "@react-native/new-app-screen": "0.82.1",
+    "@stripe/stripe-react-native": "^0.57.2",
+    "axios": "^1.13.2",
+    "react": "19.1.1",
+    "react-native": "0.82.1",
+    "react-native-config": "^1.6.1",
+    "react-native-flutterwave": "^1.0.0",
+    "react-native-image-picker": "^8.2.1",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-paystack-webview": "^5.0.3",
+    "react-native-safe-area-context": "^5.5.2",
+    "react-native-vector-icons": "^10.3.0",
+    "react-native-webview": "^13.6.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli-platform-android": "20.0.0",
+    "@react-native-community/cli-platform-ios": "20.0.0",
+    "@react-native/babel-preset": "0.82.1",
+    "@react-native/eslint-config": "0.82.1",
+    "@react-native/metro-config": "0.82.1",
+    "@react-native/typescript-config": "0.82.1",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^19.1.1",
+    "@types/react-test-renderer": "^19.1.0",
+    "baseline-browser-mapping": "^2.9.15",
+    "eslint": "^8.19.0",
+    "jest": "^29.6.3",
+    "prettier": "2.8.8",
+    "react-test-renderer": "19.1.1",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
